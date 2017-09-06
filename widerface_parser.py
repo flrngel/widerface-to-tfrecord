@@ -2,7 +2,7 @@ import os
 import numpy
 import cv2
 
-f = open("WIDER/wider_face_train_annot.txt")
+f = open("WIDER/wider_face_train_annot.txt", 'rb')
 # Total annotated image number is 12880
 for j in range(12880):
   filename = f.readline().rstrip()
@@ -11,7 +11,7 @@ for j in range(12880):
   filepath = os.path.join("./WIDER/WIDER_train/images/", filename)
   print(filepath)
 
-  encoded = open(filepath).read()
+  encoded = open(filepath, 'rb').read()
   image = cv2.imread(filepath)
   height, width, channel = image.shape
   print("height is %d, width is %d, channel is %d" % (height, width, channel))

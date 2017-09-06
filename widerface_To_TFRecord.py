@@ -35,12 +35,12 @@ def parse_example(f):
 
 
   filename = f.readline().rstrip()
-  print(filename)
-  filepath = os.path.join("./WIDER/WIDER_train/images/", filename)
+  print(filename.decode('utf8'))
+  filepath = os.path.join("./WIDER/WIDER_train/images/", filename.decode('utf8'))
   print(filepath)
   image_raw = cv2.imread(filepath)
 
-  encoded_image_data = open(filepath).read()
+  encoded_image_data = open(filepath, 'rb').read()
   key = hashlib.sha256(encoded_image_data).hexdigest()
 
   height, width, channel = image_raw.shape
@@ -58,7 +58,7 @@ def parse_example(f):
             ymins.append( max(0.005, (float(annot[1]) / height) ) )
             xmaxs.append( min(0.995, ((float(annot[0]) + float(annot[2])) / width) ) )
             ymaxs.append( min(0.995, ((float(annot[1]) + float(annot[3])) / height) ) )
-            classes_text.append('face')
+            classes_text.append('face'.encode('utf8'))
             classes.append(1)
             poses.append("front".encode('utf8'))
             truncated.append(int(0))
@@ -93,7 +93,7 @@ def parse_example(f):
 
 
 def main(unused_argv):
-  f = open("WIDER/wider_face_train_annot.txt")
+  f = open("WIDER/wider_face_train_annot.txt", 'rb')
   writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
 
 # WIDER FACE DATASET ANNOTATED 12880 IMAGES
